@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar.jsx";
 import Navbar from "../../components/Navbar.jsx";
 import {
@@ -10,9 +10,25 @@ import {
   FaAngleLeft,
   FaAngleRight,
 } from "react-icons/fa";
-import { invoices } from "../../components/invoices.js";
+import axios from "axios";
 
 const Invoice = () => {
+  const [invoices, setInvoices] = useState([]);
+
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        const res = await axios.get("/api/invoices");
+        setInvoices(res.data);
+        console.log("data:", res.data);
+      } catch (err) {
+        console.log("err:", err);
+      }
+    };
+
+    fetchInvoices();
+  }, []);
+
   return (
     <div className="bg-dark-white h-screen w-screen flex flex-row overflow-hidden">
       <Sidebar />
