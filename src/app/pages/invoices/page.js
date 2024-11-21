@@ -23,6 +23,7 @@ const Invoice = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [invoiceToDelete, setInvoiceToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [invoiceData, setInvoiceData] = useState({
     vendorName: "",
     invoiceNumber: "",
@@ -122,6 +123,10 @@ const Invoice = () => {
     setInvoiceToDelete(null);
   };
 
+  const toggleUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInvoiceData((prevData) => ({
@@ -185,6 +190,31 @@ const Invoice = () => {
       toggleDeleteModal();
     } catch (err) {
       console.log("Error deleting invoice:", err);
+    }
+  };
+
+  const handleEditClick = (invoice) => {
+    setInvoiceData(invoice);
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleUpdateSubmit = async () => {
+    try {
+      const updatedInvoice = await axios.put(
+        `/api/updateInvoice/${invoiceData._id}`,
+        invoiceData
+      );
+      setInvoices((prevInvoices) =>
+        prevInvoices.map((invoice) =>
+          invoice._id === updatedInvoice.data.invoice._id
+            ? { ...invoice, ...updatedInvoice.data.invoice }
+            : invoice
+        )
+      );
+      setIsUpdateModalOpen(false);
+      toggleUpdateModal();
+    } catch (err) {
+      console.error("Error updating invoice:", err);
     }
   };
 
@@ -298,6 +328,7 @@ const Invoice = () => {
                         <button
                           title="Edit"
                           className="text-blue-500 hover:text-blue-700 transition duration-200"
+                          onClick={() => handleEditClick(item)}
                         >
                           <FaEdit size={20} />
                         </button>
@@ -506,6 +537,129 @@ const Invoice = () => {
                       Delete
                     </button>
                   </div>
+                </div>
+              </div>
+            )}
+
+            {isUpdateModalOpen && (
+              <div className="modal-overlay">
+                <div className="modal-content">
+                  <h2 className="font-poppins text-xl font-semibold mb-5">
+                    Update Invoice
+                  </h2>
+                  <form>
+                    <div className="form-group">
+                      <label>Vendor Name</label>
+                      <input
+                        type="text"
+                        name="vendorName"
+                        value={invoiceData.vendorName}
+                        onChange={handleInputChange}
+                        placeholder="Vendor name"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Invoice Number</label>
+                      <input
+                        type="text"
+                        name="invoiceNumber"
+                        value={invoiceData.invoiceNumber}
+                        onChange={handleInputChange}
+                        placeholder="Invoice number"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label className="mt-2">Status</label>
+                      <select
+                        name="status"
+                        value={invoiceData.status}
+                        onChange={handleInputChange}
+                        className="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-main-color focus:border-transparent"
+                      >
+                        <option value="Open">Open</option>
+                        <option value="Awaiting Approval">
+                          Awaiting Approval
+                        </option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Net Amount</label>
+                      <input
+                        type="number"
+                        name="netAmount"
+                        value={invoiceData.netAmount}
+                        onChange={handleInputChange}
+                        placeholder="Net amount"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Invoice Date</label>
+                      <input
+                        type="date"
+                        name="invoiceDate"
+                        value={invoiceData.invoiceDate}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Due Date</label>
+                      <input
+                        type="date"
+                        name="dueDate"
+                        value={invoiceData.dueDate}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Department</label>
+                      <input
+                        type="text"
+                        name="department"
+                        value={invoiceData.department}
+                        onChange={handleInputChange}
+                        placeholder="Department"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>PO Number</label>
+                      <input
+                        type="text"
+                        name="poNumber"
+                        value={invoiceData.poNumber}
+                        onChange={handleInputChange}
+                        placeholder="PO number"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-actions">
+                      <button
+                        type="button"
+                        className="bg-red-500 text-dark-white rounded-xl cursor-pointer hover:bg-dark-white hover:text-red-500 hover:border hover:border-red-500"
+                        onClick={toggleUpdateModal}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        className="bg-blue-500 text-dark-white rounded-xl cursor-pointer hover:bg-dark-white hover:text-blue-500 hover:border hover:border-blue-500"
+                        onClick={handleUpdateSubmit}
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             )}
