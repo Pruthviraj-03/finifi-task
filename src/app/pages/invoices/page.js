@@ -170,6 +170,7 @@ const Invoice = () => {
       });
 
       toggleModal();
+      alert("Invoice created successfully!");
     } catch (err) {
       console.log("Error creating invoice:", err);
     }
@@ -188,6 +189,7 @@ const Invoice = () => {
       );
       setIsDeleteModalOpen(false);
       toggleDeleteModal();
+      alert("Invoice deleted successfully!");
     } catch (err) {
       console.log("Error deleting invoice:", err);
     }
@@ -213,6 +215,7 @@ const Invoice = () => {
       );
       setIsUpdateModalOpen(false);
       toggleUpdateModal();
+      alert("Invoice updated successfully!");
     } catch (err) {
       console.error("Error updating invoice:", err);
     }
@@ -347,8 +350,7 @@ const Invoice = () => {
                         ? item.invoiceNumber
                         : `No. ${item.invoiceNumber}`}
                     </td>
-
-                    <td className="h-5 w-36 border border-main-color rounded-full flex items-center justify-center ml-3 py-4">
+                    <td className="w-36 h-10 border border-main-color rounded-full flex items-center justify-center ml-4">
                       <span className="font-poppins text-main-color text-sm">
                         {item.status}
                       </span>

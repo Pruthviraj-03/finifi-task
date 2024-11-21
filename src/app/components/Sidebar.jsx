@@ -15,7 +15,7 @@ const Sidebar = () => {
       <div className="flex flex-col gap-5 justify-center items-center mt-16 w-full h-auto">
         <Link
           href="/"
-          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group"
+          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-1"
         >
           <FaCompass className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white" />
           <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white">
@@ -25,7 +25,7 @@ const Sidebar = () => {
 
         <Link
           href="/pages/invoices"
-          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group"
+          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7"
         >
           <HiDocumentText className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white" />
           <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white">
@@ -35,7 +35,7 @@ const Sidebar = () => {
 
         <Link
           href="/pages/vendors"
-          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group"
+          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7"
         >
           <FaUserTie className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white" />
           <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white">
@@ -45,7 +45,7 @@ const Sidebar = () => {
 
         <Link
           href="/pages/settings"
-          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group"
+          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7"
         >
           <FiSettings className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white" />
           <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white">
