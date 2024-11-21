@@ -20,6 +20,8 @@ const Invoice = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [invoiceToDelete, setInvoiceToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [invoiceData, setInvoiceData] = useState({
     vendorName: "",
@@ -115,6 +117,11 @@ const Invoice = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  const toggleDeleteModal = () => {
+    setIsDeleteModalOpen(!isDeleteModalOpen);
+    setInvoiceToDelete(null);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInvoiceData((prevData) => ({
@@ -134,8 +141,6 @@ const Invoice = () => {
         }),
         createdDate: new Date().toLocaleDateString(),
       });
-
-      console.log("Invoice Created:", res.data);
 
       setInvoices((prevInvoices) => {
         const newInvoices = [...prevInvoices, res.data.invoice];
@@ -162,6 +167,24 @@ const Invoice = () => {
       toggleModal();
     } catch (err) {
       console.log("Error creating invoice:", err);
+    }
+  };
+
+  const handleDeleteClick = (invoice) => {
+    setInvoiceToDelete(invoice);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteInvoice = async () => {
+    try {
+      await axios.delete(`/api/deleteInvoice/${invoiceToDelete._id}`);
+      setInvoices((prevInvoices) =>
+        prevInvoices.filter((invoice) => invoice._id !== invoiceToDelete._id)
+      );
+      setIsDeleteModalOpen(false);
+      toggleDeleteModal();
+    } catch (err) {
+      console.log("Error deleting invoice:", err);
     }
   };
 
@@ -281,6 +304,7 @@ const Invoice = () => {
                         <button
                           title="Delete"
                           className="text-red-500 hover:text-red-700 transition duration-200"
+                          onClick={() => handleDeleteClick(item)}
                         >
                           <FaTrash size={20} />
                         </button>
@@ -454,6 +478,34 @@ const Invoice = () => {
                       </button>
                     </div>
                   </form>
+                </div>
+              </div>
+            )}
+
+            {isDeleteModalOpen && (
+              <div className="modal-overlay">
+                <div className="modal-content">
+                  <h2 className="font-poppins text-xl font-semibold mb-5">
+                    Are you sure you want to delete this invoice?
+                  </h2>
+                  <p>Vendor Name: {invoiceToDelete.vendorName}</p>
+                  <p>Invoice Number: {invoiceToDelete.invoiceNumber}</p>
+                  <div className="form-actions mt-5">
+                    <button
+                      type="button"
+                      className="bg-red-500 text-dark-white rounded-xl cursor-pointer hover:bg-dark-white hover:text-red-500 hover:border hover:border-red-500"
+                      onClick={toggleDeleteModal}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className="bg-green-500 text-dark-white rounded-xl cursor-pointer hover:bg-dark-white hover:text-green-500 hover:border hover:border-green-500"
+                      onClick={handleDeleteInvoice}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
