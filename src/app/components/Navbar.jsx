@@ -13,12 +13,12 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-row justify-between items-center h-16 p-5 border border-b-light-grey">
+    <div className="w-full flex flex-row justify-between items-center h-16 p-5 border border-b-light-grey laptop:p-3">
       <span className="font-poppins text-2xl font-semibold text-main-color capitalize">
         Manage {endpoint}
       </span>
 
-      <div className="flex flex-row gap-4 justify-center items-center w-auto h-full">
+      <div className="flex flex-row gap-4 justify-center items-center w-auto h-full laptop:gap-5">
         <FaBell className="border border-main-color rounded-full cursor-pointer p-2 text-3xl text-main-color" />
         <div className="h-full w-[1px] bg-dark-grey"></div>
         <div className="flex flex-row gap-3 h-full w-auto justify-center items-center">

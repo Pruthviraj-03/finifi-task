@@ -11,11 +11,13 @@ const Vendors = () => {
       <div className="bg-dark-white w-10/12 flex flex-col">
         <Navbar />
 
-        <div className="flex flex-col p-8">
-          <h1 className="text-4xl text-main-color font-bold mb-6">Vendors</h1>
+        <div className="flex flex-col p-8 laptop:p-4">
+          <h1 className="text-4xl text-main-color font-bold mb-6 laptop:text-2xl laptop:mb-3">
+            Vendors
+          </h1>
 
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-2 text-main-color">
+          <section className="mb-12 laptop:mb-5">
+            <h2 className="text-2xl font-semibold mb-2 text-main-color laptop:text-xl">
               Who Are Vendors?
             </h2>
             <p className="text-lg text-gray-700">
@@ -28,8 +30,8 @@ const Vendors = () => {
             </p>
           </section>
 
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-2 text-main-color">
+          <section className="mb-12 laptop:mb-5">
+            <h2 className="text-2xl font-semibold mb-2 text-main-color laptop:text-xl">
               What Do Vendors Do?
             </h2>
             <ul className="list-disc pl-8 text-lg text-gray-700">
@@ -56,10 +58,10 @@ const Vendors = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl text-main-color font-semibold mb-2">
+            <h2 className="text-2xl text-main-color font-semibold mb-2 laptop:text-xl">
               Popular Vendors
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-5 laptop:gap-5 laptop:mt-2">
               <div className="bg-white p-4 rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold text-gray-800">Amazon</h3>
                 <p className="text-gray-600">

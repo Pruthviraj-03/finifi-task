@@ -222,13 +222,13 @@ const Invoice = () => {
   };
 
   return (
-    <div className="bg-dark-white h-screen w-screen flex flex-row overflow-hidden">
+    <div className="bg-dark-white h-screen w-screen flex flex-row overflow-hidden laptop:overflow-y-scroll">
       <Sidebar />
       <div className="bg-dark-white w-10/12 flex flex-col">
         <Navbar />
 
         <div className="flex flex-col w-full h-auto justify-center items-center gap-1">
-          <div className="flex flex-row w-full h-auto justify-center items-center gap-24 p-3 border border-b-light-grey">
+          <div className="flex flex-row w-full h-auto justify-center items-center gap-24 p-3 border border-b-light-grey laptop:p-2 laptop:gap-12">
             {[
               "All",
               "Open",
@@ -243,7 +243,7 @@ const Invoice = () => {
             ].map((status) => (
               <span
                 key={status}
-                className={`font-poppins text-md cursor-pointer hover:border-b-2 hover:border-main-color ${
+                className={`font-poppins text-md laptop:text-sm cursor-pointer hover:border-b-2 hover:border-main-color ${
                   selectedStatus === status
                     ? "text-black border-b-2 border-main-color"
                     : "text-main-color"
@@ -255,8 +255,8 @@ const Invoice = () => {
             ))}
           </div>
 
-          <div className="flex justify-between items-center w-11/12 h-auto p-5">
-            <div className="border border-dark-grey h-10 w-4/12 rounded-lg flex flex-row gap-2 justify-center items-center p-3">
+          <div className="flex justify-between items-center w-11/12 h-auto p-5 laptop:p-4 laptop:w-full">
+            <div className="border border-dark-grey h-10 w-4/12 rounded-lg flex flex-row gap-2 justify-center items-center p-3 laptop:w-5/12">
               <FaSearch className="font-poppins text-2xl text-main-color" />
               <select
                 value={searchOption}
@@ -272,12 +272,12 @@ const Invoice = () => {
                 value={searchQuery}
                 onChange={handleSearchQueryChange}
                 placeholder="search..."
-                className="w-full h-full border-none outline-none text-md text-main-color font-poppins"
+                className="w-full h-full border-none outline-none text-md text-main-color font-poppins laptop:text-sm"
               />
             </div>
 
             <div
-              className="flex items-center justify-center bg-main-color w-40 h-10 rounded-lg cursor-pointer hover:bg-dark-white hover:border hover:border-main-color group"
+              className="flex items-center justify-center bg-main-color w-40 laptop:w-36 h-10 rounded-lg cursor-pointer hover:bg-dark-white hover:border hover:border-main-color group"
               onClick={toggleModal}
             >
               <span className="text-dark-white text-sm font-semibold font-poppins group-hover:text-main-color">
@@ -290,34 +290,34 @@ const Invoice = () => {
             <table className="w-max table-auto border-collapse">
               <thead>
                 <tr>
-                  <th className="sticky left-0 bg-main-color z-10 py-4 px-16 border-r border-b text-dark-white font-poppins text-md font-semibold">
+                  <th className="sticky left-0 bg-main-color z-10 py-4 px-16 border-r border-b text-dark-white font-poppins text-md font-semibold laptop:py-3 laptop:px-12 laptop:text-sm">
                     Vendor Name
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     Invoice Number
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     Status
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     Net Amount
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     Invoice Date
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     Due Date
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     Department
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     PO Number
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     Created Time
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm">
                     Created Date
                   </th>
                 </tr>
@@ -326,62 +326,64 @@ const Invoice = () => {
               <tbody>
                 {currentInvoices.slice(0, 7).map((item, index) => (
                   <tr key={index}>
-                    <td className="sticky left-0 bg-white py-5 px-16 border-b font-poppins text-main-color border-r flex items-center gap-5">
-                      <div className="flex gap-3">
+                    <td className="sticky left-0 bg-white py-5 px-16 border-b font-poppins text-main-color border-r flex items-center gap-5 laptop:py-4 laptop:px-8">
+                      <div className="flex gap-3 laptop:gap-0">
                         <button
                           title="Edit"
-                          className="text-blue-500 hover:text-blue-700 transition duration-200"
+                          className="text-blue-500 hover:text-blue-700 transition duration-200 laptop:px-2"
                           onClick={() => handleEditClick(item)}
                         >
                           <FaEdit size={20} />
                         </button>
                         <button
                           title="Delete"
-                          className="text-red-500 hover:text-red-700 transition duration-200"
+                          className="text-red-500 hover:text-red-700 transition duration-200 laptop:px-2"
                           onClick={() => handleDeleteClick(item)}
                         >
                           <FaTrash size={20} />
                         </button>
                       </div>
-                      <span className="ml-3 capitalize">{item.vendorName}</span>
+                      <span className="ml-3 capitalize laptop:text-sm laptop:ml-1">
+                        {item.vendorName}
+                      </span>
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color laptop:py-2 laptop:text-sm">
                       {item.invoiceNumber.startsWith("No.")
                         ? item.invoiceNumber
                         : `No. ${item.invoiceNumber}`}
                     </td>
-                    <td className="w-36 h-10 border border-main-color rounded-full flex items-center justify-center ml-4">
-                      <span className="font-poppins text-main-color text-sm">
+                    <td className="w-36 h-10 border border-main-color rounded-full flex items-center justify-center ml-4 laptop:py-2 laptop:px-8">
+                      <span className="font-poppins text-main-color text-sm laptop:text-[9.6px]">
                         {item.status}
                       </span>
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color laptop:py-2 laptop:text-sm">
                       {item.netAmount.toLocaleString("en-IN")}
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color laptop:py-2 laptop:text-sm">
                       {new Date(item.invoiceDate)
                         .toLocaleDateString("en-GB")
                         .split("/")
                         .join("-")}
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color laptop:py-2 laptop:text-sm">
                       {new Date(item.dueDate)
                         .toLocaleDateString("en-GB")
                         .split("/")
                         .join("-")}
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color capitalize">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color laptop:py-2 laptop:text-sm capitalize">
                       {item.department}
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color laptop:py-2 laptop:text-sm">
                       {item.poNumber.startsWith("PO")
                         ? item.poNumber
                         : `PO${item.poNumber}`}
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color laptop:py-2 laptop:text-sm">
                       {item.createdTime}
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color laptop:py-2 laptop:text-sm">
                       {new Date(item.createdDate)
                         .toLocaleDateString("en-GB")
                         .split("/")
@@ -667,16 +669,16 @@ const Invoice = () => {
             )}
           </div>
 
-          <div className="flex flex-row gap-3 items-center justify-center w-auto h-auto mt-5">
+          <div className="flex flex-row gap-3 items-center justify-center w-auto h-auto mt-5 laptop:mt-1">
             <FaAngleLeft
-              className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer"
+              className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer laptop:text-md"
               onClick={() => handlePageChange("prev")}
             />
-            <span className="font-poppins text-lg text-main-color font-semibold">
+            <span className="font-poppins text-lg text-main-color font-semibold laptop:text-md">
               {currentPage} of {totalPages}
             </span>
             <FaAngleRight
-              className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer"
+              className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer laptop:text-md"
               onClick={() => handlePageChange("next")}
             />
           </div>

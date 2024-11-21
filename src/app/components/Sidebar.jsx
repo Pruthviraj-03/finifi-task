@@ -8,47 +8,47 @@ import Link from "next/link";
 const Sidebar = () => {
   return (
     <div className="w-2/12 flex items-center flex-col bg-light-grey p-8">
-      <span className="text-main-color font-bold text-5xl font-poppins tracking-wide">
+      <span className="text-main-color font-bold text-5xl font-poppins tracking-wide laptop:text-4xl">
         finifi
       </span>
 
-      <div className="flex flex-col gap-5 justify-center items-center mt-16 w-full h-auto">
+      <div className="flex flex-col gap-5 justify-center items-center mt-16 w-full h-auto laptop:mt-10 laptop:gap-3">
         <Link
           href="/"
-          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-1"
+          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-1 laptop:gap-3 laptop:mr-2"
         >
-          <FaCompass className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white" />
-          <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white">
+          <FaCompass className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white laptop:text-lg" />
+          <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white laptop:text-lg">
             Dashboard
           </span>
         </Link>
 
         <Link
           href="/pages/invoices"
-          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7"
+          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7 laptop:gap-3 laptop:mr-4"
         >
-          <HiDocumentText className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white" />
-          <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white">
+          <HiDocumentText className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white laptop:text-lg" />
+          <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white laptop:text-lg">
             Invoices
           </span>
         </Link>
 
         <Link
           href="/pages/vendors"
-          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7"
+          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7 laptop:gap-3 laptop:mr-4"
         >
-          <FaUserTie className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white" />
-          <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white">
+          <FaUserTie className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white laptop:text-lg" />
+          <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white laptop:text-lg">
             Vendors
           </span>
         </Link>
 
         <Link
           href="/pages/settings"
-          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7"
+          className="flex flex-row gap-5 w-full h-12 items-center justify-center cursor-pointer rounded-lg hover:bg-main-color group mr-7 laptop:gap-3 laptop:mr-4"
         >
-          <FiSettings className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white" />
-          <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white">
+          <FiSettings className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white laptop:text-lg" />
+          <span className="text-main-color font-light text-xl font-poppins group-hover:text-dark-white laptop:text-lg">
             Settings
           </span>
         </Link>

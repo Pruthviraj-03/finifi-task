@@ -10,9 +10,9 @@ const Settings = () => {
       <Sidebar />
       <div className="bg-dark-white w-10/12 flex flex-col">
         <Navbar />
-        <div className="flex flex-col p-6">
-          <div className="my-4">
-            <h1 className="font-poppins text-4xl font-semibold text-main-color">
+        <div className="flex flex-col p-6 laptop:p-4">
+          <div className="my-4 laptop:my-2">
+            <h1 className="font-poppins text-4xl font-semibold text-main-color laptop:text-3xl">
               Settings
             </h1>
             <p className="text-lg text-main-color mt-4">
@@ -20,8 +20,8 @@ const Settings = () => {
             </p>
           </div>
 
-          <div className="my-4">
-            <h2 className="font-poppins text-3xl font-semibold text-main-color mb-4">
+          <div className="my-4 laptop:my-2">
+            <h2 className="font-poppins text-3xl font-semibold text-main-color mb-4 laptop:text-2xl">
               Account Settings
             </h2>
             <div className="space-y-4">
@@ -64,14 +64,14 @@ const Settings = () => {
                   className="w-full p-3 mt-2 border border-light-grey rounded-lg"
                 />
               </div>
-              <button className="bg-main-color text-white px-6 py-3 mt-4 rounded-lg hover:bg-white hover:text-main-color hover:border hover:border-main-color">
+              <button className="bg-main-color text-white px-6 py-3 mt-4 rounded-lg hover:bg-white hover:text-main-color hover:border hover:border-main-color laptop:px-5 laptop:py-2">
                 Save Changes
               </button>
             </div>
           </div>
 
           <div className="my-4">
-            <h2 className="font-poppins text-3xl font-semibold text-main-color mb-4">
+            <h2 className="font-poppins text-3xl font-semibold text-main-color mb-4 laptop:text-2xl">
               Notification Settings
             </h2>
             <div className="space-y-4">
