@@ -25,8 +25,11 @@ const Invoice = () => {
     const fetchInvoices = async () => {
       try {
         const res = await axios.get("/api/invoices");
-        setInvoices(res.data);
-        setFilteredInvoices(res.data);
+
+        const shuffledInvoices = shuffleArray(res.data);
+
+        setInvoices(shuffledInvoices);
+        setFilteredInvoices(shuffledInvoices);
       } catch (err) {
         console.log("err:", err);
       }
@@ -34,6 +37,15 @@ const Invoice = () => {
 
     fetchInvoices();
   }, []);
+
+  const shuffleArray = (array) => {
+    let shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
 
   useEffect(() => {
     let filtered = invoices;
@@ -217,13 +229,19 @@ const Invoice = () => {
                       </span>
                     </td>
                     <td className="py-5 px-16 border-b font-poppins text-main-color">
-                      {item.netAmount}
+                      {item.netAmount.toLocaleString("en-IN")}
                     </td>
                     <td className="py-5 px-16 border-b font-poppins text-main-color">
-                      {item.invoiceDate}
+                      {new Date(item.invoiceDate)
+                        .toLocaleDateString("en-GB")
+                        .split("/")
+                        .join("-")}
                     </td>
                     <td className="py-5 px-16 border-b font-poppins text-main-color">
-                      {item.dueDate}
+                      {new Date(item.dueDate)
+                        .toLocaleDateString("en-GB")
+                        .split("/")
+                        .join("-")}
                     </td>
                     <td className="py-5 px-16 border-b font-poppins text-main-color">
                       {item.department}
@@ -235,7 +253,10 @@ const Invoice = () => {
                       {item.createdTime}
                     </td>
                     <td className="py-5 px-16 border-b font-poppins text-main-color">
-                      {item.createdDate}
+                      {new Date(item.createdDate)
+                        .toLocaleDateString("en-GB")
+                        .split("/")
+                        .join("-")}
                     </td>
                   </tr>
                 ))}
