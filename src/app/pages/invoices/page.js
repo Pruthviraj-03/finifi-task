@@ -20,11 +20,22 @@ const Invoice = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [invoiceData, setInvoiceData] = useState({
+    vendorName: "",
+    invoiceNumber: "",
+    status: "Open",
+    netAmount: "",
+    invoiceDate: "",
+    dueDate: "",
+    department: "",
+    poNumber: "",
+  });
 
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const res = await axios.get("/api/invoices");
+        const res = await axios.get("/api/getinvoices");
 
         const shuffledInvoices = shuffleArray(res.data);
 
@@ -100,6 +111,60 @@ const Invoice = () => {
     currentPage * itemsPerPage
   );
 
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInvoiceData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post("/api/createInvoice", {
+        ...invoiceData,
+        createdTime: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        }),
+        createdDate: new Date().toLocaleDateString(),
+      });
+
+      console.log("Invoice Created:", res.data);
+
+      setInvoices((prevInvoices) => {
+        const newInvoices = [...prevInvoices, res.data.invoice];
+        const shuffledInvoices = shuffleArray(newInvoices);
+        return shuffledInvoices;
+      });
+
+      setFilteredInvoices((prevFilteredInvoices) => {
+        const newFilteredInvoices = [...prevFilteredInvoices, res.data.invoice];
+        return newFilteredInvoices;
+      });
+
+      setInvoiceData({
+        status: "Open",
+        invoiceDate: "",
+        dueDate: "",
+        vendorName: "",
+        invoiceNumber: "",
+        netAmount: "",
+        department: "",
+        poNumber: "",
+      });
+
+      toggleModal();
+    } catch (err) {
+      console.log("Error creating invoice:", err);
+    }
+  };
+
   return (
     <div className="bg-dark-white h-screen w-screen flex flex-row overflow-hidden">
       <Sidebar />
@@ -122,7 +187,7 @@ const Invoice = () => {
             ].map((status) => (
               <span
                 key={status}
-                className={`font-poppins text-md cursor-pointer ${
+                className={`font-poppins text-md cursor-pointer hover:border-b-2 hover:border-main-color ${
                   selectedStatus === status
                     ? "text-black border-b-2 border-main-color"
                     : "text-main-color"
@@ -155,7 +220,10 @@ const Invoice = () => {
               />
             </div>
 
-            <div className="flex items-center justify-center bg-main-color w-40 h-10 rounded-lg cursor-pointer hover:bg-dark-white hover:border hover:border-main-color group">
+            <div
+              className="flex items-center justify-center bg-main-color w-40 h-10 rounded-lg cursor-pointer hover:bg-dark-white hover:border hover:border-main-color group"
+              onClick={toggleModal}
+            >
               <span className="text-dark-white text-sm font-semibold font-poppins group-hover:text-main-color">
                 Create Invoice +
               </span>
@@ -198,19 +266,18 @@ const Invoice = () => {
                   </th>
                 </tr>
               </thead>
+
               <tbody>
                 {currentInvoices.slice(0, 7).map((item, index) => (
                   <tr key={index}>
                     <td className="sticky left-0 bg-white py-5 px-16 border-b font-poppins text-main-color border-r flex items-center gap-5">
                       <div className="flex gap-3">
-                        {/* Edit Button */}
                         <button
                           title="Edit"
                           className="text-blue-500 hover:text-blue-700 transition duration-200"
                         >
                           <FaEdit size={20} />
                         </button>
-                        {/* Delete Button */}
                         <button
                           title="Delete"
                           className="text-red-500 hover:text-red-700 transition duration-200"
@@ -218,12 +285,15 @@ const Invoice = () => {
                           <FaTrash size={20} />
                         </button>
                       </div>
-                      <span className="ml-3">{item.vendorName}</span>
+                      <span className="ml-3 capitalize">{item.vendorName}</span>
                     </td>
                     <td className="py-5 px-16 border-b font-poppins text-main-color">
-                      {item.invoiceNumber}
+                      {item.invoiceNumber.startsWith("No.")
+                        ? item.invoiceNumber
+                        : `No. ${item.invoiceNumber}`}
                     </td>
-                    <td className="h-5 w-36 border border-main-color rounded-full flex items-center justify-center mt-3 ml-3 py-4">
+
+                    <td className="h-5 w-36 border border-main-color rounded-full flex items-center justify-center ml-3 py-4">
                       <span className="font-poppins text-main-color text-sm">
                         {item.status}
                       </span>
@@ -243,11 +313,13 @@ const Invoice = () => {
                         .split("/")
                         .join("-")}
                     </td>
-                    <td className="py-5 px-16 border-b font-poppins text-main-color">
+                    <td className="py-5 px-16 border-b font-poppins text-main-color capitalize">
                       {item.department}
                     </td>
                     <td className="py-5 px-16 border-b font-poppins text-main-color">
-                      {item.poNumber}
+                      {item.poNumber.startsWith("PO")
+                        ? item.poNumber
+                        : `PO${item.poNumber}`}
                     </td>
                     <td className="py-5 px-16 border-b font-poppins text-main-color">
                       {item.createdTime}
@@ -262,6 +334,129 @@ const Invoice = () => {
                 ))}
               </tbody>
             </table>
+
+            {isModalOpen && (
+              <div className="modal-overlay">
+                <div className="modal-content">
+                  <h2 className="font-poppins text-xl font-semibold mb-5">
+                    Create Invoice
+                  </h2>
+                  <form>
+                    <div className="form-group">
+                      <label>Vendor Name</label>
+                      <input
+                        type="text"
+                        name="vendorName"
+                        value={invoiceData.vendorName}
+                        onChange={handleInputChange}
+                        placeholder="Vendor name"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Invoice Number</label>
+                      <input
+                        type="text"
+                        name="invoiceNumber"
+                        value={invoiceData.invoiceNumber}
+                        onChange={handleInputChange}
+                        placeholder="Invoice number"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label className="mt-2">Status</label>
+                      <select
+                        name="status"
+                        value={invoiceData.status}
+                        onChange={handleInputChange}
+                        className="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-main-color focus:border-transparent"
+                      >
+                        <option value="Open">Open</option>
+                        <option value="Awaiting Approval">
+                          Awaiting Approval
+                        </option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Net Amount</label>
+                      <input
+                        type="number"
+                        name="netAmount"
+                        value={invoiceData.netAmount}
+                        onChange={handleInputChange}
+                        placeholder="Net amount"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Invoice Date</label>
+                      <input
+                        type="date"
+                        name="invoiceDate"
+                        value={invoiceData.invoiceDate}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Due Date</label>
+                      <input
+                        type="date"
+                        name="dueDate"
+                        value={invoiceData.dueDate}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Department</label>
+                      <input
+                        type="text"
+                        name="department"
+                        value={invoiceData.department}
+                        onChange={handleInputChange}
+                        placeholder="Department"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>PO Number</label>
+                      <input
+                        type="text"
+                        name="poNumber"
+                        value={invoiceData.poNumber}
+                        onChange={handleInputChange}
+                        placeholder="PO number"
+                        className="border-b-2 border-b-main-color outline-none"
+                      />
+                    </div>
+
+                    <div className="form-actions">
+                      <button
+                        type="button"
+                        className="bg-red-500 text-dark-white rounded-xl cursor-pointer hover:bg-dark-white hover:text-red-500 hover:border hover:border-red-500"
+                        onClick={toggleModal}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        className="bg-green-500 text-dark-white rounded-xl cursor-pointer hover:bg-dark-white hover:text-green-500 hover:border hover:border-green-500"
+                        onClick={handleSubmit}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-row gap-3 items-center justify-center w-auto h-auto mt-5">
