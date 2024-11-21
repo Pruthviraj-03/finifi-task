@@ -14,13 +14,19 @@ import axios from "axios";
 
 const Invoice = () => {
   const [invoices, setInvoices] = useState([]);
+  const [filteredInvoices, setFilteredInvoices] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("All");
+  const [searchOption, setSearchOption] = useState("vendor");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
 
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
         const res = await axios.get("/api/invoices");
         setInvoices(res.data);
-        console.log("data:", res.data);
+        setFilteredInvoices(res.data);
       } catch (err) {
         console.log("err:", err);
       }
@@ -28,6 +34,59 @@ const Invoice = () => {
 
     fetchInvoices();
   }, []);
+
+  useEffect(() => {
+    let filtered = invoices;
+    if (selectedStatus !== "All") {
+      filtered = invoices.filter(
+        (invoice) => invoice.status === selectedStatus
+      );
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter((invoice) => {
+        if (searchOption === "vendor") {
+          return invoice.vendorName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        } else if (searchOption === "number") {
+          return invoice.invoiceNumber
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        }
+        return false;
+      });
+    }
+
+    setFilteredInvoices(filtered);
+  }, [selectedStatus, invoices, searchQuery, searchOption]);
+
+  const handleSearchQueryChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchOptionChange = (e) => {
+    setSearchOption(e.target.value);
+  };
+
+  const handleStatusChange = (status) => {
+    setSelectedStatus(status);
+  };
+
+  const totalPages = Math.ceil(filteredInvoices.length / itemsPerPage);
+
+  const handlePageChange = (direction) => {
+    if (direction === "next" && currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === "prev" && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const currentInvoices = filteredInvoices.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="bg-dark-white h-screen w-screen flex flex-row overflow-hidden">
@@ -37,48 +96,48 @@ const Invoice = () => {
 
         <div className="flex flex-col w-full h-auto justify-center items-center gap-1">
           <div className="flex flex-row w-full h-auto justify-center items-center gap-24 p-3 border border-b-light-grey">
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              All
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Open
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Awaiting Approval
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Approved
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Processing
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Paid
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Rejected
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Vendor Not Found
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Duplicate
-            </span>
-            <span className="font-poppins text-md text-main-color cursor-pointer">
-              Void
-            </span>
+            {[
+              "All",
+              "Open",
+              "Awaiting Approval",
+              "Approved",
+              "Processing",
+              "Paid",
+              "Rejected",
+              "Vendor Not Found",
+              "Duplicate",
+              "Void",
+            ].map((status) => (
+              <span
+                key={status}
+                className={`font-poppins text-md cursor-pointer ${
+                  selectedStatus === status
+                    ? "text-black border-b-2 border-main-color"
+                    : "text-main-color"
+                }`}
+                onClick={() => handleStatusChange(status)}
+              >
+                {status}
+              </span>
+            ))}
           </div>
 
           <div className="flex justify-between items-center w-11/12 h-auto p-5">
             <div className="border border-dark-grey h-10 w-4/12 rounded-lg flex flex-row gap-2 justify-center items-center p-3">
               <FaSearch className="font-poppins text-2xl text-main-color" />
-              <select className="border-none outline-none rounded-md text-main-color cursor-pointer font-bold">
+              <select
+                value={searchOption}
+                onChange={handleSearchOptionChange}
+                className="border-none outline-none rounded-md text-main-color cursor-pointer font-bold"
+              >
                 <option value="vendor">by Vendor Name</option>
                 <option value="number">by Invoice Number</option>
               </select>
               <div className="h-full w-[3px] bg-dark-grey"></div>
               <input
                 type="text"
+                value={searchQuery}
+                onChange={handleSearchQueryChange}
                 placeholder="search..."
                 className="w-full h-full border-none outline-none text-md text-main-color font-poppins"
               />
@@ -128,7 +187,7 @@ const Invoice = () => {
                 </tr>
               </thead>
               <tbody>
-                {invoices.slice(0, 7).map((item, index) => (
+                {currentInvoices.slice(0, 7).map((item, index) => (
                   <tr key={index}>
                     <td className="sticky left-0 bg-white py-5 px-16 border-b font-poppins text-main-color border-r flex items-center gap-5">
                       <div className="flex gap-3">
@@ -185,11 +244,17 @@ const Invoice = () => {
           </div>
 
           <div className="flex flex-row gap-3 items-center justify-center w-auto h-auto mt-5">
-            <FaAngleLeft className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer" />
+            <FaAngleLeft
+              className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer"
+              onClick={() => handlePageChange("prev")}
+            />
             <span className="font-poppins text-lg text-main-color font-semibold">
-              1 of 3
+              {currentPage} of {totalPages}
             </span>
-            <FaAngleRight className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer" />
+            <FaAngleRight
+              className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer"
+              onClick={() => handlePageChange("next")}
+            />
           </div>
         </div>
       </div>
