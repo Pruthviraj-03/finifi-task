@@ -64,7 +64,7 @@ const Page = () => {
             </h3>
             <p className="text-md text-main-color">
               **Finifi** is a cutting-edge invoicing platform designed to
-              simplify your business's financial workflows. Whether you're a
+              simplify your business financial workflows. Whether you are a
               freelancer, small business owner, or a large enterprise, our
               intuitive platform helps you keep track of all your invoices,
               payments, and financial records in one place.
