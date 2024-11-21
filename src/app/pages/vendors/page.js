@@ -6,13 +6,13 @@ import Navbar from "../../components/Navbar.jsx";
 
 const Vendors = () => {
   return (
-    <div className="bg-dark-white h-screen w-screen flex flex-row tablet:flex-col">
+    <div className="bg-dark-white h-screen w-screen flex flex-row tablet:flex-col mobile:flex-col">
       <Sidebar />
-      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen">
+      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen mobile:w-screen">
         <Navbar />
 
-        <div className="flex flex-col p-8 laptop:p-4">
-          <h1 className="text-4xl text-main-color font-bold mb-6 laptop:text-2xl laptop:mb-3">
+        <div className="flex flex-col p-8 laptop:p-4 mobile:p-6">
+          <h1 className="text-4xl text-main-color font-bold mb-6 laptop:text-2xl laptop:mb-3 mobile:text-3xl">
             Vendors
           </h1>
 

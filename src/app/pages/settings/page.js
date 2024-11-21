@@ -6,13 +6,13 @@ import Navbar from "../../components/Navbar.jsx";
 
 const Settings = () => {
   return (
-    <div className="bg-dark-white h-screen w-screen flex flex-row tablet:flex-col">
+    <div className="bg-dark-white h-screen w-screen flex flex-row tablet:flex-col mobile:flex-col">
       <Sidebar />
-      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen">
+      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen mobile:w-screen">
         <Navbar />
         <div className="flex flex-col p-6 laptop:p-4">
-          <div className="my-4 laptop:my-2">
-            <h1 className="font-poppins text-4xl font-semibold text-main-color laptop:text-3xl">
+          <div className="my-4 laptop:my-2 mobile:my-2">
+            <h1 className="font-poppins text-4xl font-semibold text-main-color laptop:text-3xl mobile:text-3xl">
               Settings
             </h1>
             <p className="text-lg text-main-color mt-4">

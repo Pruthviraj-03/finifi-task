@@ -6,12 +6,12 @@ import Navbar from "./components/Navbar.jsx";
 
 const Page = () => {
   return (
-    <div className="bg-dark-white h-screen w-screen flex flex-row tablet:flex-col">
+    <div className="bg-dark-white h-screen w-screen flex flex-row tablet:flex-col mobile:flex-col">
       <Sidebar />
-      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen">
+      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen mobile:w-screen">
         <Navbar />
         <div className="flex flex-col p-6">
-          <div className="text-center my-6">
+          <div className="text-center my-6 mobile:my-3">
             <h1 className="font-poppins text-3xl font-semibold text-main-color">
               Welcome to Finifi - Your Invoicing Platform
             </h1>

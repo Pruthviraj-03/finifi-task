@@ -222,13 +222,13 @@ const Invoice = () => {
   };
 
   return (
-    <div className="bg-dark-white h-screen w-screen flex flex-row overflow-hidden laptop:overflow-y-scroll tablet:flex-col tablet:overflow-y-scroll">
+    <div className="bg-dark-white h-screen w-screen flex flex-row overflow-hidden laptop:overflow-y-scroll tablet:flex-col tablet:overflow-y-scroll mobile:flex-col mobile:overflow-y-scroll">
       <Sidebar />
-      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen">
+      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen mobile:w-screen">
         <Navbar />
 
         <div className="flex flex-col w-full h-auto justify-center items-center gap-1">
-          <div className="flex flex-row w-full h-auto justify-center items-center gap-24 p-3 border border-b-light-grey laptop:p-2 laptop:gap-12 tablet:w-max tablet:overflow-x-scroll tablet:px-2">
+          <div className="flex flex-row w-full h-auto justify-center items-center gap-24 p-3 border border-b-light-grey laptop:p-2 laptop:gap-12 tablet:w-max tablet:overflow-x-auto tablet:gap-8 mobile:w-max mobile:overflow-x-auto mobile:gap-4">
             {[
               "All",
               "Open",
@@ -243,7 +243,7 @@ const Invoice = () => {
             ].map((status) => (
               <span
                 key={status}
-                className={`font-poppins text-md laptop:text-sm cursor-pointer hover:border-b-2 hover:border-main-color ${
+                className={`font-poppins text-md laptop:text-sm mobile:text-sm cursor-pointer hover:border-b-2 hover:border-main-color ${
                   selectedStatus === status
                     ? "text-black border-b-2 border-main-color"
                     : "text-main-color"
@@ -255,8 +255,8 @@ const Invoice = () => {
             ))}
           </div>
 
-          <div className="flex justify-between items-center w-11/12 h-auto p-5 laptop:p-4 laptop:w-full tablet:flex-col tablet:gap-5">
-            <div className="border border-dark-grey h-10 w-4/12 rounded-lg flex flex-row gap-2 justify-center items-center p-3 laptop:w-5/12 tablet:w-full tablet:h-12">
+          <div className="flex justify-between items-center w-11/12 h-auto p-5 laptop:p-4 laptop:w-full tablet:flex-col tablet:gap-5 mobile:flex-col mobile:gap-5 mobile:p-1 mobile:pt-4">
+            <div className="border border-dark-grey h-10 w-4/12 rounded-lg flex flex-row gap-2 justify-center items-center p-3 laptop:w-5/12 tablet:w-full tablet:h-12  mobile:w-full mobile:h-10">
               <FaSearch className="font-poppins text-2xl text-main-color" />
               <select
                 value={searchOption}
@@ -277,7 +277,7 @@ const Invoice = () => {
             </div>
 
             <div
-              className="flex items-center justify-center bg-main-color w-40 laptop:w-36 h-10 rounded-lg cursor-pointer hover:bg-dark-white hover:border hover:border-main-color group tablet:ml-auto"
+              className="flex items-center justify-center bg-main-color w-40 laptop:w-36 h-10 rounded-lg cursor-pointer hover:bg-dark-white hover:border hover:border-main-color group tablet:ml-auto mobile:ml-auto"
               onClick={toggleModal}
             >
               <span className="text-dark-white text-sm font-semibold font-poppins group-hover:text-main-color">
@@ -286,38 +286,38 @@ const Invoice = () => {
             </div>
           </div>
 
-          <div className="overflow-x-auto w-full ml-5">
+          <div className="overflow-x-auto w-full ml-5 mobile:mt-2 mobile:ml-1">
             <table className="w-max table-auto border-collapse">
               <thead>
                 <tr>
-                  <th className="sticky left-0 bg-main-color z-10 py-4 px-16 border-r border-b text-dark-white font-poppins text-md font-semibold laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="sticky left-0 bg-main-color z-10 py-4 px-16 border-r border-b text-dark-white font-poppins text-md font-semibold laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Vendor Name
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Invoice Number
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Status
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Net Amount
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Invoice Date
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Due Date
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Department
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     PO Number
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Created Time
                   </th>
-                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8">
+                  <th className="py-4 px-16 border-b text-dark-white font-poppins text-md font-semibold bg-main-color laptop:py-3 laptop:px-12 laptop:text-sm tablet:px-8 mobile:py-2 mobile:px-8 mobile:text-sm">
                     Created Date
                   </th>
                 </tr>
@@ -326,24 +326,24 @@ const Invoice = () => {
               <tbody>
                 {currentInvoices.slice(0, 7).map((item, index) => (
                   <tr key={index}>
-                    <td className="sticky left-0 bg-white py-5 px-16 border-b font-poppins text-main-color border-r flex items-center gap-5 laptop:py-4 laptop:px-8 tablet:px-4">
-                      <div className="flex gap-3 laptop:gap-0 tablet:gap-1">
+                    <td className="sticky left-0 bg-white py-5 px-16 border-b font-poppins text-main-color border-r flex items-center gap-5 laptop:py-4 laptop:px-8 tablet:px-4 mobile:px-2">
+                      <div className="flex gap-3 laptop:gap-0 tablet:gap-1 mobile:gap-1">
                         <button
                           title="Edit"
-                          className="text-blue-500 hover:text-blue-700 transition duration-200 laptop:px-2 tablet:px-1"
+                          className="text-blue-500 hover:text-blue-700 transition duration-200 laptop:px-2 tablet:px-1 mobile:px-1"
                           onClick={() => handleEditClick(item)}
                         >
                           <FaEdit size={20} />
                         </button>
                         <button
                           title="Delete"
-                          className="text-red-500 hover:text-red-700 transition duration-200 laptop:px-2 tablet:px-1"
+                          className="text-red-500 hover:text-red-700 transition duration-200 laptop:px-2 tablet:px-1 mobile:px-1"
                           onClick={() => handleDeleteClick(item)}
                         >
                           <FaTrash size={20} />
                         </button>
                       </div>
-                      <span className="ml-3 capitalize laptop:text-sm laptop:ml-1">
+                      <span className="ml-3 capitalize laptop:text-sm laptop:ml-1 mobile:text-sm mobile:ml-0">
                         {item.vendorName}
                       </span>
                     </td>
@@ -669,7 +669,7 @@ const Invoice = () => {
             )}
           </div>
 
-          <div className="flex flex-row gap-3 items-center justify-center w-auto h-auto mt-5 laptop:my-5 tablet:my-7">
+          <div className="flex flex-row gap-3 items-center justify-center w-auto h-auto mt-5 laptop:my-5 tablet:my-7 mobile:my-5">
             <FaAngleLeft
               className="font-poppins text-lg text-main-color hover:text-dark-grey font-semibold cursor-pointer laptop:text-md"
               onClick={() => handlePageChange("prev")}
