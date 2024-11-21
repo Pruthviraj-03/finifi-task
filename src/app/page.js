@@ -6,9 +6,9 @@ import Navbar from "./components/Navbar.jsx";
 
 const Page = () => {
   return (
-    <div className="bg-dark-white h-screen w-screen flex flex-row">
+    <div className="bg-dark-white h-screen w-screen flex flex-row tablet:flex-col">
       <Sidebar />
-      <div className="bg-dark-white w-10/12 flex flex-col">
+      <div className="bg-dark-white w-10/12 flex flex-col tablet:w-screen">
         <Navbar />
         <div className="flex flex-col p-6">
           <div className="text-center my-6">

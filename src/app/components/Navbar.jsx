@@ -13,7 +13,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-row justify-between items-center h-16 p-5 border border-b-light-grey laptop:p-3">
+    <div className="w-full flex flex-row justify-between items-center h-16 p-5 border border-b-light-grey laptop:p-3 tablet:hidden">
       <span className="font-poppins text-2xl font-semibold text-main-color capitalize">
         Manage {endpoint}
       </span>
